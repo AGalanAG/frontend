@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+# Prototipo 1 TT 
+Este sistema permite gestionar múltiples cámaras RTSP, visualizar transmisiones en tiempo real, grabar videos automáticamente y detectar prendas de vestimenta usando inteligencia artificial (YOLOv8). Incluye un backend en FastAPI y un frontend en React con Material UI.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Características principales
 
-## Available Scripts
+- **Visualización en tiempo real** de múltiples cámaras RTSP
+- **Grabación automática** organizada por cámara/fecha/hora
+- **Detección de vestimenta** usando modelo YOLOv8
+- **Búsqueda avanzada** de grabaciones por fecha/hora/cámara
+- **Búsqueda de vestimenta** por tipo/color
+- **Sistema de autenticación** con roles (administrador, operador, visualizador)
+- **Administración de usuarios**
+- **Panel de configuración** del sistema de detección
 
-In the project directory, you can run:
+## Requisitos previos
 
-### `npm start`
+- Python 3.8+ 
+- Node.js 14+ y npm 
+- FFmpeg (para optimización de videos)
+- Acceso a cámaras RTSP
+- CUDA (opcional, para aceleración GPU de detección)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Estructura del proyecto
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+El proyecto está dividido en dos partes:
 
-### `npm test`
+- **Backend**: API REST en FastAPI que gestiona cámaras, grabaciones y detección
+- **Frontend**: Aplicación React que proporciona la interfaz de usuario
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Instalación y configuración
 
-### `npm run build`
+### 2. Configuración del Frontend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### 2.1 Instalar dependencias de Node.js
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+cd frontend
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### 2.2 Configurar URL del backend
 
-### `npm run eject`
+Editar la constante en todos los archivos JS que contienen la URL del backend:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```javascript
+// En cada componente que tenga esta constante
+const baseApiUrl = 'http://localhost:8000';
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Ejecución del sistema
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 1. Iniciar el backend
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+# Desde la carpeta raíz del proyecto
+uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+```
 
-## Learn More
+### 2. Iniciar el frontend
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+cd frontend
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+La aplicación estará disponible en http://localhost:3000
 
-### Code Splitting
+## Credenciales iniciales
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+El sistema crea automáticamente un usuario administrador:
+- **Usuario**: admin
+- **Contraseña**: admin
 
-### Analyzing the Bundle Size
+Se recomienda cambiar esta contraseña inmediatamente después del primer inicio de sesión.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Roles de usuario
 
-### Making a Progressive Web App
+- **Visualizador (1)**: Solo puede ver transmisiones en vivo
+- **Operador (2)**: Puede ver transmisiones y acceder a grabaciones y búsqueda
+- **Administrador (3)**: Acceso completo, incluida gestión de usuarios y configuración
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Directorios importantes
 
-### Advanced Configuration
+- **recordings**: Almacena las grabaciones organizadas por cámara/fecha/hora
+- **data**: Contiene las bases de datos SQLite
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
